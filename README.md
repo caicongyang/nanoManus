@@ -1,5 +1,6 @@
 # nanoManus
-A simple implementation of Manus for beginner learners
+[Manus is a famous general AI agent that bridges minds and actions](https://manus.im/)
+this project is a  simple implementation of OpenManus for beginner learners
 
 ## Project Structure
 
