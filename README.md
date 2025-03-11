@@ -19,3 +19,5 @@ This project aims to provide a simplified implementation of Manus with education
 
 ## Acknowledgments
 Special thanks to the OpenManus project ([GitHub Repository](https://github.com/mannaandpoem/OpenManus)) for their open-source contribution. This project draws inspiration from and is based on their work.
+
+This project was entirely generated using [Cursor](https://cursor.sh/) IDE powered by [Claude-3.7-sonnet](https://www.anthropic.com/), showcasing the capabilities of modern AI assistants in code generation and project development.
