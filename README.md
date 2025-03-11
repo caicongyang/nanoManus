@@ -1,5 +1,5 @@
 # nanoManus
-[Manus is a famous general AI agent that bridges minds and actions](https://manus.im/)
+[Manus is a famous general AI agent that bridges minds and actions](https://manus.im/)  
 this project is a  simple implementation of OpenManus for beginner learners
 
 ## Project Structure
