@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Database Tools Comparison</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px
+        }
+
+        h1 {
+            color: #2563eb;
+            text-align: center
+        }
+
+        .tool {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px
+        }
+
+        .tool h2 {
+            margin-top: 0;
+            color: #2563eb
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #3776AB;
+            color: white;
+            border-radius: 4px;
+            margin-right: 5px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd
+        }
+
+        th {
+            background: #2563eb;
+            color: white
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AI 数据库工具对比</h1>
+    <div class="tool">
+        <h2>WrenAI</h2>
+        <p>团队: 台湾团队</p>
+        <p>语言: <span class="tag">Python</span> <span class="tag">TypeScript</span></p>
+        <p>源码: <a href="https://github.com/Canner/WrenAI">Github</a></p>
+        <p>部署: 本地部署失败，通过 cloud 方式体验</p>
+    </div>
+    <div class="tool">
+        <h2>Vanna</h2>
+        <p>语言: <span class="tag">Python</span></p>
+        <p>源码: <a href="https://github.com/vanna-ai/vanna">Github</a></p>
+        <p>特点: 命令行方式，不适合普通大众</p>
+    </div>
+    <table>
+        <tr>
+            <th>工具</th>
+            <th>团队</th>
+            <th>语言</th>
+            <th>部署方式+收费方式</th>
+            <th>评价</th>
+            <th>是否建议引入</th>
+        </tr>
+        <tr>
+            <td>WrenAI</td>
+            <td>台湾团队</td>
+            <td>Python, TypeScript</td>
+            <td>开源+支持本地部署+token收费</td>
+            <td>功能完整</td>
+            <td>是</td>
+        </tr>
+        <tr>
+            <td>Vanna</td>
+            <td>开源社区</td>
+            <td>Python</td>
+            <td>开源+支持本地部署+token收费</td>
+            <td>没有界面，不合适</td>
+            <td>否</td>
+        </tr>
+        <tr>
+            <td>Supersonic</td>
+            <td>腾讯音乐</td>
+            <td>Java</td>
+            <td>开源+支持本地部署+token收费</td>
+            <td>报表工具缺少</td>
+            <td>是</td>
+        </tr>
+        <tr>
+            <td>DB-GPT</td>
+            <td>蚂蚁集团</td>
+            <td>Python</td>
+            <td>开源+支持本地部署+token收费</td>
+            <td>不好用</td>
+            <td>否</td>
+        </tr>
+        <tr>
+            <td>Chat2DB</td>
+            <td>前阿里员工</td>
+            <td>Java</td>
+            <td>按年收费</td>
+            <td>开源版本无法达到要求</td>
+            <td>否</td>
+        </tr>
+    </table>
+</body>
+
+</html>
