@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  manus:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: nanomanus-sandbox
+    container_name: nanomanus-sandbox
+    volumes:
+      # 挂载应用代码
+      - ../:/app:ro
+      # 挂载专用工作目录，可写
+      - ./workspace:/app/workspace
+      # 创建一个只读的home目录防止权限问题
+      - ./home:/home/manus:ro
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=gpt-4o
+      - MAX_STEPS=15
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    # 安全设置
+    security_opt:
+      - no-new-privileges=true
+    # 网络设置 - 如果需要网络访问,可以使用host或创建自定义网络
+    # 如果不需要网络访问可以使用none
+    network_mode: "host"
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped 

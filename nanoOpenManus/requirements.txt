@@ -1,3 +1,4 @@
 asyncio>=3.4.3
 httpx>=0.24.0  # 用于LLM API集成
-python-dotenv>=1.0.0  # 用于从.env文件加载配置 
+python-dotenv>=1.0.0  # 用于从.env文件加载配置
+psutil>=5.9.0 

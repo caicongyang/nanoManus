@@ -1,57 +1,47 @@
-import argparse
-import asyncio
+#!/usr/bin/env python3
+"""
+Docker沙箱模式启动脚本
+
+这个脚本是nanoOpenManus的快捷启动方式，强制使用Docker沙箱模式。
+它会自动检查Docker容器是否已经准备好，并执行必要的准备工作。
+"""
+
 import os
+import asyncio
+import argparse
 
 # 导入Docker版本的Manus
 from nanoOpenManus.app.docker_manus import DockerManus
-# 保留原始Manus作为后备选项
-from nanoOpenManus.app.manus import Manus
 
 
 async def main():
     """
-    NanoOpenManus 的主入口函数
-    
-    创建一个Manus代理实例并处理用户输入
+    Docker模式的NanoOpenManus主入口函数
     """
     # 解析命令行参数
-    parser = argparse.ArgumentParser(description='NanoOpenManus - 一个简化版的OpenManus实现')
+    parser = argparse.ArgumentParser(description='NanoOpenManus - Docker沙箱模式')
     parser.add_argument('--api-key', help='OpenAI API密钥')
     parser.add_argument('--model', default='gpt-4o', help='LLM模型名称 (默认: gpt-4o)')
     parser.add_argument('--base-url', default='https://api.openai.com/v1', 
                         help='API基础URL (默认: https://api.openai.com/v1)')
     parser.add_argument('--max-steps', type=int, default=15, help='最大执行步骤数 (默认: 15)')
-    # 添加Docker相关选项
-    parser.add_argument('--use-docker', action='store_true', default=True, 
-                        help='在Docker容器中执行工具 (默认: 开启)')
     parser.add_argument('--container-name', default='nanomanus-sandbox',
                         help='Docker容器名称 (默认: nanomanus-sandbox)')
-    parser.add_argument('--local', action='store_true',
-                        help='使用本地环境执行工具，不使用Docker')
     args = parser.parse_args()
     
-    # 创建代理实例
-    if args.local or not args.use_docker:
-        print("🖥️ 使用本地环境执行工具")
-        agent = Manus(
-            max_steps=args.max_steps,
-            api_key=args.api_key,
-            model=args.model,
-            base_url=args.base_url
-        )
-    else:
-        print(f"🐳 使用Docker容器 '{args.container_name}' 执行工具")
-        agent = DockerManus(
-            max_steps=args.max_steps,
-            api_key=args.api_key,
-            model=args.model,
-            base_url=args.base_url,
-            container_name=args.container_name
-        )
+    # 创建DockerManus代理实例
+    print(f"🐳 初始化Docker沙箱模式...")
+    agent = DockerManus(
+        max_steps=args.max_steps,
+        api_key=args.api_key,
+        model=args.model,
+        base_url=args.base_url,
+        container_name=args.container_name
+    )
     
-    print("🚀 NanoOpenManus 已启动!")
+    print("🚀 NanoOpenManus Docker沙箱模式已启动!")
     print("📝 这是一个简化版的OpenManus实现，专为学习和理解AI代理设计。")
-    print("🔧 可用工具: python_execute, file_saver, terminate")
+    print("🔧 可用工具: python_execute, file_saver, environment_check, terminate")
     print("⌨️  输入'exit'或'quit'退出程序\n")
     
     # 主循环

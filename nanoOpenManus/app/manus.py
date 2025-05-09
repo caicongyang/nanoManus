@@ -3,6 +3,7 @@ from nanoOpenManus.app.agent import ToolCallAgent
 from nanoOpenManus.app.tools.file_saver import FileSaver
 from nanoOpenManus.app.tools.python_execute import PythonExecute
 from nanoOpenManus.app.tools.terminate import Terminate
+from nanoOpenManus.app.tools.environment_check import EnvironmentCheck
 from nanoOpenManus.app.tools.tool_collection import ToolCollection
 
 # 尝试导入LLM和配置
@@ -36,7 +37,8 @@ class Manus(ToolCallAgent):
         
 1. python_execute: 执行Python代码，用于与计算机系统交互、数据处理、自动化任务等。
 2. file_saver: 在本地保存文件，如txt、py、html等。
-3. terminate: 完成任务后终止代理执行。
+3. environment_check: 检查代码执行环境，验证是本地环境还是Docker容器。
+4. terminate: 完成任务后终止代理执行。
 
 根据用户需求，主动选择最合适的工具或工具组合。对于复杂任务，可以将问题分解，逐步使用不同的工具来解决。每次使用工具后，清晰地解释执行结果并提出下一步建议。"""
 
@@ -46,6 +48,7 @@ class Manus(ToolCallAgent):
         # 添加内置工具
         self.available_tools.add_tool(PythonExecute())
         self.available_tools.add_tool(FileSaver())
+        self.available_tools.add_tool(EnvironmentCheck())
         self.available_tools.add_tool(Terminate())
         
         # 如果LLM可用，初始化LLM客户端
