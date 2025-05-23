@@ -54,9 +54,9 @@ class Manus(ToolCallAgent):
         # 如果LLM可用，初始化LLM客户端
         if LLM_AVAILABLE:
             # 获取API密钥 - 优先使用传入的参数，其次使用配置，最后使用环境变量
-            llm_api_key = api_key or (hasattr(config, 'llm_api_key') and config.llm_api_key) or os.environ.get("OPENAI_API_KEY")
-            llm_model = model or (hasattr(config, 'llm_model') and config.llm_model) or "gpt-4o"
-            llm_base_url = base_url or (hasattr(config, 'llm_base_url') and config.llm_base_url) or "https://api.openai.com/v1"
+            llm_api_key = api_key or (hasattr(config, 'llm_api_key') and config.llm_api_key) or os.environ.get("DEEPSEEK_API_KEY")
+            llm_model = model or (hasattr(config, 'llm_model') and config.llm_model) or "deepseek-chat"
+            llm_base_url = base_url or (hasattr(config, 'llm_base_url') and config.llm_base_url) or "https://api.deepseek.com"
             
             if llm_api_key:
                 try:

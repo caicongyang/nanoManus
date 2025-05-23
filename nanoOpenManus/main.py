@@ -1,6 +1,19 @@
+import sys
+import os
+
+# --- Start of code to fix Python path ---
+# This ensures that the project root directory (containing the 'nanoOpenManus' package)
+# is on the Python path, allowing imports like 'from nanoOpenManus.app...'
+_current_script_path = os.path.abspath(__file__)
+_current_script_dir = os.path.dirname(_current_script_path)
+_project_root = os.path.dirname(_current_script_dir) 
+
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+# --- End of code to fix Python path ---
+
 import argparse
 import asyncio
-import os
 
 # 导入Docker版本的Manus
 from nanoOpenManus.app.docker_manus import DockerManus
@@ -16,13 +29,13 @@ async def main():
     """
     # 解析命令行参数
     parser = argparse.ArgumentParser(description='NanoOpenManus - 一个简化版的OpenManus实现')
-    parser.add_argument('--api-key', help='OpenAI API密钥')
-    parser.add_argument('--model', default='gpt-4o', help='LLM模型名称 (默认: gpt-4o)')
-    parser.add_argument('--base-url', default='https://api.openai.com/v1', 
-                        help='API基础URL (默认: https://api.openai.com/v1)')
+    parser.add_argument('--api-key',default=os.getenv('DEEPSEEK_API_KEY'), help='deepseek-chat密钥')
+    parser.add_argument('--model', default='deepseek-chat', help='LLM模型名称 (默认: deepseek-chat)')
+    parser.add_argument('--base-url', default='https://api.deepseek.com', 
+                        help='API基础URL (默认: https://api.deepseek.com)')
     parser.add_argument('--max-steps', type=int, default=15, help='最大执行步骤数 (默认: 15)')
     # 添加Docker相关选项
-    parser.add_argument('--use-docker', action='store_true', default=True, 
+    parser.add_argument('--use-docker', action='store_true',  default=True,
                         help='在Docker容器中执行工具 (默认: 开启)')
     parser.add_argument('--container-name', default='nanomanus-sandbox',
                         help='Docker容器名称 (默认: nanomanus-sandbox)')

@@ -81,7 +81,7 @@ class DockerToolProxy:
                 f"from nanoOpenManus.app.tools.file_saver import FileSaver; "
                 f"from nanoOpenManus.app.tools.terminate import Terminate; "
                 f"tools = ToolCollection(PythonExecute(), FileSaver(), Terminate()); "
-                f"tool_call = json.loads('{tool_call_json}'); "
+                f"tool_call = json.loads({repr(tool_call_json)}); "
                 f"result = asyncio.run(tools.execute(name=tool_call['tool'], tool_input=tool_call['args'])); "
                 f"print(json.dumps({{'output': str(result.output) if result.output is not None else None, "
                 f"'error': str(result.error) if result.error is not None else None}}));"
