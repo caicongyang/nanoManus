@@ -27,9 +27,12 @@ RUN pip install --no-cache-dir \
 RUN if [ -n "${HTTP_PROXY}" ]; then unset HTTP_PROXY; fi
 RUN if [ -n "${HTTPS_PROXY}" ]; then unset HTTPS_PROXY; fi
 
-# Copy application code (project root from host -> ${APP_HOME} in container)
-# This means ${APP_HOME}/nanoOpenManus/ will be the package root.
-COPY . ${APP_HOME}
+# The 'nanoOpenManus' Python package (containing the tools) is located in
+# 'docker/nanoOpenManus/' within the build context.
+# Copy it to ${APP_HOME}/nanoOpenManus/ to serve as the importable package.
+# This ensures ${APP_HOME}/nanoOpenManus/ is the package root,
+# and PYTHONPATH=${APP_HOME} allows 'import nanoOpenManus'.
+COPY docker/nanoOpenManus/ ${APP_HOME}/nanoOpenManus/
 
 # Correctly overwrite original tools with safe versions INSIDE the nanoOpenManus package structure
 COPY docker/safe_tools/file_saver.py ${APP_HOME}/nanoOpenManus/app/tools/file_saver.py
