@@ -1,23 +1,36 @@
-version: '3.8'
-
 services:
   manus:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      args:
+        # Pass proxy settings from your environment to the build
+        # Ensure your shell has HTTP_PROXY and HTTPS_PROXY set if you are behind a proxy
+        HTTP_PROXY: ${HTTP_PROXY:-}
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
     image: nanomanus-sandbox
     container_name: nanomanus-sandbox
     volumes:
-      # 挂载应用代码
-      - ../:/app:ro
-      # 挂载专用工作目录，可写
-      - ./workspace:/app/workspace
-      # 创建一个只读的home目录防止权限问题
+      # 关键改动：移除宿主机代码到 /app 的挂载，因为镜像是自包含的
+      # - ../:/app:ro 
+      
+      # Dockerfile 中 ALLOWED_WRITE_DIR 设置为 /workspace_in_container
+      # 将宿主机的 ./workspace (位于 nanoOpenManus/docker/workspace)
+      # 挂载到容器的 /workspace_in_container (FileSaver 将在此写入)
+      - ./workspace:/workspace_in_container 
+      
+      # 如果需要一个只读的 home 目录给 manus 用户，可以保留
       - ./home:/home/manus:ro
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - LLM_MODEL=gpt-4o
       - MAX_STEPS=15
+      - DEBUG=true
+      # 如果容器内的应用需要通过代理访问外部网络，则传递代理设置
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      # ALLOWED_WRITE_DIR 由 Dockerfile 设置，这里不需要重复除非要覆盖
+      # - ALLOWED_WRITE_DIR=/workspace_in_container
     # 资源限制
     deploy:
       resources:
@@ -31,10 +44,10 @@ services:
     # 如果不需要网络访问可以使用none
     network_mode: "host"
     # 健康检查
-    healthcheck:
-      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
+    # healthcheck: # 对于主要通过 exec 使用的容器，健康检查可能不是非常关键
+    #   test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 5s
     restart: unless-stopped 
